@@ -1,15 +1,16 @@
-import { IUser } from "../../types/types";
+
 import { api } from "../api/apiSlice";
 
 type UserLogin = {
-    email: string,
-    password: string,
+    name?:string;
+    email: string;
+    password: string;
 }
 const userApi = api.injectEndpoints({
     endpoints: (builder) => ({
         registerUser: builder.mutation({
-            query: (user: IUser) => ({
-                url: '/register',
+            query: (user: UserLogin) => ({
+                url: '/user/register',
                 method: 'POST',
                 body: user
             })
@@ -24,4 +25,4 @@ const userApi = api.injectEndpoints({
     })
 })
 
-export const {useRegisterUserMutation} = userApi;
+export const {useRegisterUserMutation, useLoginUserMutation} = userApi;
