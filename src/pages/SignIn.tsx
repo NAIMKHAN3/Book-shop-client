@@ -17,9 +17,9 @@ const SignIn = () => {
         },
     });
     return (
-        <div className="w-1/3 rounded-md mx-auto my-5 p-5 border border-[#0874c4]">
+        <div className="w-full md:w-1/3 rounded-md mx-auto my-5 p-5 border border-[#0874c4]">
             <Heading className="text-center text-3xl text-[#0874c4]">
-                Login
+                Sign In
             </Heading>
             <form onSubmit={formik.handleSubmit}>
                 <div className="flex flex-col my-5">
@@ -47,7 +47,7 @@ const SignIn = () => {
                         placeholder="Enter Your Password"
                     />
                 </div>
-                <Button className="my-5 w-full" type="submit">Submit</Button>
+                <Button className="my-5 w-full" type="submit">Sign In</Button>
             </form>
             <Paragraph className="text-center">
                 New to book shop please <Link to='/signup'><span className="text-blue-500">sign up</span></Link>
