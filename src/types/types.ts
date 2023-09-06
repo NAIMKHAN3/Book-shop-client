@@ -13,31 +13,31 @@ export type IError = {
         message?: string;
         stack?: string;
     }
-} 
+}
 export type IProps = {
     className?: string;
     children?: React.ReactNode;
     value?: string;
     src?: string;
-    type?:"button" | "submit" | "reset";
-    onClick?:  React.MouseEventHandler<HTMLButtonElement>
+    type?: "button" | "submit" | "reset";
+    onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 export type IInput = {
-    id?:string;
+    id?: string;
     name?: string;
     onChange?: ChangeEventHandler<HTMLInputElement>;
     value?: string;
     type?: string;
     className?: string;
-    placeholder?:string;
+    placeholder?: string;
 }
 
 export type IInputDiv = {
     type?: string;
     level?: string;
     className?: string;
-    placeholder?:string;
+    placeholder?: string;
 }
 
 export type IBook = {
@@ -45,4 +45,11 @@ export type IBook = {
     genre: string;
     price: number;
     image: string;
+}
+
+export type IImageResponse = {
+    data: {
+        message: string;
+        data: any;
+    }
 }
