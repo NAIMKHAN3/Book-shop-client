@@ -16,7 +16,7 @@ const BookDetails = () => {
     const navigate = useNavigate()
     const { data } = useGetSingleBookQuery(id)
     const [postReview, { data: response, isSuccess }] = useBookReviewMutation()
-    const [deleteBook, { data: responseDelete, isSuccess: success }] = useDeleteBookMutation()
+    const [deleteBook, { isSuccess: success }] = useDeleteBookMutation()
     const { token } = useAppSelector(state => state.user)
     const book: IBookResponse = data?.data;
     const formik = useFormik({
