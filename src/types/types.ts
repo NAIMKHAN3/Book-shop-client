@@ -31,6 +31,7 @@ export type IInput = {
     type?: string;
     className?: string;
     placeholder?: string;
+    defaultValue?: string;
 }
 
 export type IInputDiv = {

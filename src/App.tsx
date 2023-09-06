@@ -1,7 +1,9 @@
+import { useLocation } from "react-router-dom";
 import MainLayout from "./layout/MainLayout"
 import { useAppDispatch } from "./redux/hook"
 import { userSet } from "./redux/user/userSlice"
 import { Toaster } from 'react-hot-toast';
+import {useEffect} from 'react'
 
 function App() {
   const dispatch = useAppDispatch()
@@ -10,6 +12,10 @@ if(userStringify){
   const user = JSON.parse(userStringify)
   dispatch(userSet(user))
 }
+const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
   return (
     <>
     <Toaster />

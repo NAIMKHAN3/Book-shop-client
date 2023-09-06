@@ -2,60 +2,67 @@ import { useFormik } from 'formik';
 import Heading from '../components/Heading';
 import Input from '../components/Input';
 import Button from '../components/Button';
-import { useBookPostMutation, useImageUploadeMutation } from '../redux/book/bookApi';
+import { useBookPostMutation, useBookUpdateMutation, useGetSingleBookQuery, useImageUploadeMutation } from '../redux/book/bookApi';
 import { IError, IImageResponse } from '../types/types';
 import { useEffect } from 'react';
 import { useAppSelector } from '../redux/hook';
 import toast from 'react-hot-toast';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const AddNew = () => {
+const UpdateBook = () => {
     // const dispatch = useAppDispatch()
-    const {token} = useAppSelector(state => state.user)
-
-    const [imageUpload] = useImageUploadeMutation()
-    const [bookPost, { data, isLoading, isError, isSuccess, error }] = useBookPostMutation()
+    const navigate = useNavigate();
+    const { token } = useAppSelector(state => state.user)
+    const { id } = useParams()
+    const { data } = useGetSingleBookQuery(id)
+    const [updateBook, { data: updateResponse, isLoading, error, isError, isSuccess }] = useBookUpdateMutation()
+    console.log
     const formik = useFormik({
         initialValues: {
-            title: '',
-            genre: '',
-            price: '',
-            image: '',
+            title: data?.data.title,
+            genre: data?.data.genre,
+            price: data?.data.price,
         },
         onSubmit: async (values) => {
-            const imageFile = values.image[0]
-            const formData = new FormData();
-            formData.append('image', imageFile);
-            const image = await imageUpload(formData)
-            if (image) {
-                const imageRespone = image as IImageResponse
-                const book = {
+
+            console.log(values)
+
+            const book = {
+                book: {
                     title: values.title,
                     genre: values.genre,
                     price: parseInt(values.price),
-                    image: imageRespone?.data?.data?._id
-                }
-                bookPost({book, token})
-                formik.resetForm();
+                    image: data.data.image._id,
+                },
+                token,
+                id
             }
+            updateBook(book)
+
+            formik.resetForm();
+
         },
     });
-    useEffect(()=>{
+
+    useEffect(() => {
         if (isLoading) {
-            toast.loading('Posting...', { id: 'signup' })
+            toast.loading('Updating...', { id: 'signup' })
         }
         if (isSuccess) {
-            toast.success(data?.message, { id: 'signup' })
+            console.log()
+            toast.success(updateResponse?.message, { id: 'signup' })
+            navigate(`/book-details/${id}`)
         }
         if (isError) {
             const errorMessage = error as IError
             const message = errorMessage.data?.message || 'Something went wrong'
             toast.error(message, { id: 'signup' })
         }
-    },[isError, isLoading, isSuccess])
+    }, [isError, isLoading, isSuccess])
     return (
         <div className="w-full md:w-1/3  rounded-md md:mx-auto my-5 p-5 border border-[#0874c4]">
             <Heading className="text-center text-3xl text-[#0874c4]">
-                Add New Book
+                Update Book
             </Heading>
             <form onSubmit={formik.handleSubmit}>
                 <div className="flex flex-col my-5">
@@ -66,7 +73,7 @@ const AddNew = () => {
                         name="title"
                         type="text"
                         onChange={formik.handleChange}
-                        value={formik.values.title}
+                        defaultValue={data?.data.title}
                         placeholder="Title"
                     />
                 </div>
@@ -78,7 +85,7 @@ const AddNew = () => {
                         name="genre"
                         type="text"
                         onChange={formik.handleChange}
-                        value={formik.values.genre}
+                        defaultValue={data?.data.genre}
                         placeholder="Genre"
                     />
                 </div>
@@ -91,24 +98,8 @@ const AddNew = () => {
                         name="price"
                         type="number"
                         onChange={formik.handleChange}
-                        value={formik.values.price}
+                        defaultValue={data?.data.price}
                         placeholder="Price"
-                    />
-                </div>
-                <div className="flex flex-col my-5">
-                    <label htmlFor="lastName" className="text-xl">Image</label>
-                    <Input
-                        className="border-2 border-gray-400 w-full px-2 py-3 my-3 rounded focus:outline-none focus:border-blue-500"
-                        id="image"
-                        name="image"
-                        type="file"
-                        onChange={(event) => {
-                            const selectedFile = event?.currentTarget.files;
-                            if (selectedFile) {
-                                formik.setFieldValue('image', selectedFile);
-                            }
-                        }}
-                        placeholder="image"
                     />
                 </div>
                 <Button className="my-5 w-full" type="submit">Submit</Button>
@@ -117,4 +108,4 @@ const AddNew = () => {
     );
 };
 
-export default AddNew;
+export default UpdateBook;
