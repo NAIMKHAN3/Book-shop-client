@@ -22,7 +22,26 @@ const bookApi = api.injectEndpoints({
                 }
             })
         }),
+        bookReview: builder.mutation({
+            query: (data) => ({
+                url: `/book/review-book/${data.id}`,
+                method: 'POST',
+                body: data.review,
+                headers: {
+                    Authorization: `Bearer ${data.token}`,
+                    'Content-Type': 'application/json',
+                }
+            }),
+            invalidatesTags: ['book']
+        }),
+        getBooks: builder.query({
+            query: () => '/book/get-books'
+        }),
+        getSingleBook: builder.query({
+            query: (id) => `/book/get-single-book/${id}`,
+            providesTags: ['book']
+        }),
     })
 })
 
-export const { useImageUploadeMutation, useBookPostMutation } = bookApi;
+export const { useImageUploadeMutation,useBookReviewMutation, useBookPostMutation, useGetBooksQuery, useGetSingleBookQuery } = bookApi;

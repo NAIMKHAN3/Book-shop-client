@@ -35,7 +35,7 @@ const AddNew = () => {
                     image: imageRespone?.data?.data?._id
                 }
                 bookPost({book, token})
-
+                formik.resetForm();
             }
         },
     });

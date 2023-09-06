@@ -22,7 +22,7 @@ const SignUp = () => {
         onSubmit: async (values) => {
            
         postUser(values)
-          
+        formik.resetForm();
         },
     });
     useEffect(()=>{

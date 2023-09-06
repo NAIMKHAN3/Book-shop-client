@@ -53,3 +53,37 @@ export type IImageResponse = {
         data: any;
     }
 }
+
+
+export interface IBookResponse {
+    _id: string;
+    author: {
+        _id?: string;
+        name?: string;
+        email?: string;
+        createdAt?: string;
+        updatedAt?: string;
+        __v?: number
+    },
+    genre: string;
+    title: string;
+    price: number;
+    image: {
+        _id?: string
+        bucket?: string;
+        etag?: string;
+        fileExtension?: string;
+        fileName?: string;
+        fileUrl?: string;
+        mimeType?: string;
+        size?: number;
+        __v?: number;
+        createdAt?: string;
+        updatedAt?: string;
+    },
+    publicationDate: string;
+    reviews: string[];
+    __v?: number;
+    createdAt?: string;
+    updatedAt?: string;
+}

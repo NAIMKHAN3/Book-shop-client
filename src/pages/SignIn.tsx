@@ -22,7 +22,7 @@ const SignIn = () => {
         },
         onSubmit: values => {
            loginUser(values)
-            
+           formik.resetForm();
             
         },
     });
