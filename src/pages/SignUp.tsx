@@ -7,8 +7,11 @@ import { Link } from 'react-router-dom';
 import { useRegisterUserMutation } from '../redux/user/userApi';
 import { useAppDispatch } from '../redux/hook';
 import { userSet } from '../redux/user/userSlice';
+import toast from 'react-hot-toast';
+import { IError } from '../types/types';
+import { useEffect } from 'react';
 const SignUp = () => {
-    const [postUser, { data, isSuccess, error }] = useRegisterUserMutation()
+    const [postUser, { data, isLoading, isError, isSuccess, error }] = useRegisterUserMutation()
     const dispatch = useAppDispatch()
     const formik = useFormik({
         initialValues: {
@@ -16,18 +19,33 @@ const SignUp = () => {
             email: '',
             password: '',
         },
-        onSubmit: values => {
-            console.log(values)
-            postUser(values)
-            // alert(JSON.stringify(values, null, 2));
+        onSubmit: async (values) => {
+           
+        postUser(values)
+          
         },
     });
-    if (isSuccess) {
-        dispatch(userSet(data.data))
-        console.log(data)
-    } else {
-        console.log(error)
-    }
+    useEffect(()=>{
+        if (isLoading) {
+            toast.loading('Sign Up...', { id: 'signup' })
+        }
+        if (isSuccess) {
+            dispatch(userSet(data))
+            toast.success('Sign up success', { id: 'signup' })
+        }
+        if (isError) {
+            const errorMessage = error as IError
+            const message = errorMessage.data?.message || 'Something went wrong'
+            toast.error(message, { id: 'signup' })
+        }
+    },[isError, isLoading, isSuccess])
+    
+console.log(isError, isLoading, isSuccess)
+
+
+
+
+
     return (
         <div className="w-full md:w-1/3  rounded-md md:mx-auto my-5 p-5 border border-[#0874c4]">
             <Heading className="text-center text-3xl text-[#0874c4]">
