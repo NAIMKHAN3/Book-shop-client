@@ -1,7 +1,7 @@
 
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useBookReviewMutation, useDeleteBookMutation, useGetSingleBookQuery } from '../redux/book/bookApi';
-import { IBookResponse } from '../types/types';
+import { IBookResponse, IError } from '../types/types';
 import Image from '../components/Image';
 import Paragraph from '../components/Paragraph';
 import Heading from '../components/Heading';
@@ -10,6 +10,8 @@ import Input from '../components/Input';
 import { useAppSelector } from '../redux/hook';
 import Button from '../components/Button';
 import toast from 'react-hot-toast'
+import { useAddWishlistMutation } from '../redux/wishlist/wishlistApi';
+import { useEffect } from 'react';
 
 const BookDetails = () => {
     const { id } = useParams()
@@ -17,7 +19,8 @@ const BookDetails = () => {
     const { data } = useGetSingleBookQuery(id)
     const [postReview, { data: response, isSuccess }] = useBookReviewMutation()
     const [deleteBook, { isSuccess: success }] = useDeleteBookMutation()
-    const { token } = useAppSelector(state => state.user)
+    const [addWishlist, { isSuccess: wishlistSuccess, isLoading: wishlistLoading, isError: wishlistError, error }] = useAddWishlistMutation()
+    const { token, _id } = useAppSelector(state => state.user)
     const book: IBookResponse = data?.data;
     const formik = useFormik({
         initialValues: {
@@ -43,8 +46,8 @@ const BookDetails = () => {
         }
         deleteBook(info)
     }
-    if(success){
-        toast.success('Book Deleted Success', {id: 'book'})
+    if (success) {
+        toast.success('Book Deleted Success', { id: 'book' })
         navigate('/books')
     }
     if (isSuccess) {
@@ -65,10 +68,35 @@ const BookDetails = () => {
         const year = date.getFullYear();
 
         formattedDate = `${day} ${month} ${year}`;
-
-
     }
 
+    const handleWishlist = () => {
+        const data = {
+            wishlist: {
+                userId: _id,
+                bookId: book._id
+            },
+            token
+        }
+        addWishlist(data)
+    }
+
+
+
+    useEffect(() => {
+        if (wishlistLoading) {
+            toast.loading('Addeding...', { id: 'book' })
+        }
+        if (wishlistSuccess) {
+            toast.success('Wishlist Added', { id: 'book' })
+        }
+        if (wishlistError) {
+            const errorMessage = error as IError
+            const message = errorMessage.data?.message || 'Something went wrong'
+            toast.error(message, { id: 'book' })
+        }
+    }, [wishlistError, wishlistLoading, wishlistSuccess])
+    console.log(book?.author?._id, _id)
     return (
         <div className='w-4/5 mx-auto my-10'>
             <div>
@@ -97,11 +125,18 @@ const BookDetails = () => {
                             <span className=' font-semibold'>Price : </span>
                             {formattedDate ? formattedDate : book?.publicationDate}
                         </Paragraph>
-                        <div className='mt-10 flex items-center'>
+                        {
+                            book?.author?._id === _id? <div className='mt-10 flex items-center'>
                             <Link to={`/update-book/${book?._id}`}><Button>Edit</Button></Link>
 
                             <button onClick={handleDelete} className='ml-6 font-semibold hover:bg-white hover:border-red-600 hover:border  duration-300 hover:text-black bg-red-600 text-white px-4 py-2 rounded-md'>Delete</button>
+                        </div> :
+                        <div>
+                            <Button onClick={handleWishlist} className='mt-10'>Add wishlist</Button>
                         </div>
+                        }
+                        
+                        
                     </div>
                 </div>
             </div>
@@ -123,7 +158,7 @@ const BookDetails = () => {
             {
                 book?.reviews?.length ? <div>
                     {
-                        book.reviews.map(review => <Heading>{review}</Heading>)
+                        book.reviews.map(review => <Heading className='border border-[#0874c4] py-2 px-5 rounded-md text-lg font-semibold'>{review}</Heading>)
                     }
                 </div> : null
             }
