@@ -63,7 +63,11 @@ const bookApi = api.injectEndpoints({
             query: (id) => `/book/get-single-book/${id}`,
             providesTags: ['book']
         }),
+        getLeatestBook: builder.query({
+            query: () => `/book/get-leatest-books`,
+            
+        }),
     })
 })
 
-export const { useImageUploadeMutation,useBookReviewMutation, useDeleteBookMutation, useBookUpdateMutation, useBookPostMutation, useGetBooksQuery, useGetSingleBookQuery } = bookApi;
+export const { useImageUploadeMutation,useBookReviewMutation, useGetLeatestBookQuery, useDeleteBookMutation, useBookUpdateMutation, useBookPostMutation, useGetBooksQuery, useGetSingleBookQuery } = bookApi;
