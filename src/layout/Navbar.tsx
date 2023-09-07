@@ -1,5 +1,5 @@
 import Heading from "../components/Heading";
-import { BsTelephone, BsFacebook, BsYoutube, BsLinkedin, BsInstagram } from 'react-icons/bs'
+import { BsTelephone, BsFacebook, BsYoutube, BsLinkedin, BsInstagram , BsFillHeartFill} from 'react-icons/bs'
 import NavbarIcon from "../components/NavbarIcon";
 import Image from "../components/Image";
 import Paragraph from "../components/Paragraph";
@@ -31,6 +31,11 @@ const Navbar = () => {
                         </NavbarIcon>
                         <NavbarIcon>
                             <BsInstagram />
+                        </NavbarIcon>
+                        <NavbarIcon>
+                        <Link to='/wishlist'>
+                            <BsFillHeartFill />
+                        </Link>
                         </NavbarIcon>
 
                     </div>

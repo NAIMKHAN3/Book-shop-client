@@ -12,8 +12,17 @@ const wishlistApi = api.injectEndpoints({
                     'Content-Type': 'application/json',
                 }
             })
-        })
+        }),
+        getWishlist: builder.query({
+            query: (token) =>({
+                url: '/wishlist/get-wishlist',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                }
+            })
+        }),
     })
 })
 
-export const {useAddWishlistMutation} = wishlistApi;
+export const {useAddWishlistMutation, useGetWishlistQuery} = wishlistApi;
