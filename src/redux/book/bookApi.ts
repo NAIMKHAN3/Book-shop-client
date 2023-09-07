@@ -57,7 +57,9 @@ const bookApi = api.injectEndpoints({
             }),
         }),
         getBooks: builder.query({
-            query: () => '/book/get-books'
+            query: (data) => `/book/get-books?searchTerm=${data.search}&sort=${data.filter}`,
+            // providesTags: ['search'],
+            // invalidatesTags: ['search']
         }),
         getSingleBook: builder.query({
             query: (id) => `/book/get-single-book/${id}`,

@@ -32,6 +32,8 @@ export type IInput = {
     className?: string;
     placeholder?: string;
     defaultValue?: string;
+    onFocus?: ChangeEventHandler<HTMLInputElement>;
+    ref?:React.RefObject<HTMLInputElement>
 }
 
 export type IInputDiv = {

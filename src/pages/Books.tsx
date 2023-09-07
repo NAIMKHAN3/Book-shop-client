@@ -4,10 +4,16 @@ import Card from "../components/card/Card";
 import { useGetBooksQuery } from "../redux/book/bookApi";
 import { IBookResponse } from "../types/types";
 import Input from "../components/Input";
+import { useEffect, useRef, useState } from "react";
 
 
 const Books = () => {
-  const { data, isLoading, isSuccess } = useGetBooksQuery("")
+  const [search, setSearch] = useState("")
+  const [filter, setFilter] = useState("")
+  useEffect(()=>{
+
+  },[search, filter])
+  const { data, isLoading, isSuccess } = useGetBooksQuery({search, filter})
   const books: IBookResponse[] = data?.data
   if (isLoading) {
     return <Heading className="text-center text-2xl">Loading...</Heading>;
@@ -16,38 +22,44 @@ const Books = () => {
   if (!isSuccess || !data?.data?.length) {
     return <Heading>No books available</Heading>;
   }
-  const formik = useFormik({
-    initialValues: {
-        search: '',
 
-    },
-    onSubmit: async (search) => {
-console.log(search)
-        formik.resetForm();
-
-    },
-});
+  const handleSearch = (e: any) => {
+    e.preventDefault();
+    setSearch(e.target?.search?.value)
+  }
+  const handleFilter = (e: any) => {
+    e.preventDefault();
+    setFilter(e.target?.search?.value)
+  }
+  
+  console.log(filter)
   return (
     <div>
- <form onSubmit={formik.handleSubmit}>
-                <div className="flex my-5 w-3/5 mx-auto">
-                    <Input
-                        className="border-2 border-gray-400 w-full px-2 py-3 my-5 rounded-full focus:outline-none focus:border-blue-500"
-                        id="search"
-                        name="search"
-                        type="text"
-                        onChange={formik.handleChange}
-                        value={formik.values.search}
-                        placeholder="Search"
-                    />
-                    <button className='ml-2 my-5 font-semibold hover:bg-white border border-[#0874c4] duration-300 hover:text-[#0874c4] bg-[#0874c4] text-white px-4  rounded-lg' type='submit'>Search</button>
-                </div>
-            </form>
+
+        <form onSubmit={handleSearch}>
+      <div className="flex my-5 w-3/5 mx-auto">
+        <select onChange={(e)=> setFilter(e.target?.value)} name="" id="" className="border border-[#0874c4] px-2 py-0.5 my-5 rounded-md focus:outline-none focus:border-blue-500  mr-3">
+          <option disabled>Filter By</option>
+          <option value="minPrice">Min Price</option>
+          <option value="maxPrice">Max Price</option>
+        </select>
+          <Input
+            className="border-2 border-gray-400 w-full px-2 py-3 my-5 rounded-full focus:outline-none focus:border-blue-500"
+            id="search"
+            name="search"
+            type="text"
+            placeholder="Search"
+            key="search-input-implement"
+          />
+          <button className='ml-2 my-5 font-semibold hover:bg-white border border-[#0874c4] duration-300 hover:text-[#0874c4] bg-[#0874c4] text-white px-4  rounded-md' type='submit'>Search</button>
+      </div>
+        </form>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 w-4/5 mx-auto my-10">
-      {
-        books?.map((book: IBookResponse) => <Card key={book._id} book={book} />)
-      }
-    </div>
+        {
+          books?.map((book: IBookResponse) => <Card key={book._id} book={book} />)
+        }
+      </div>
     </div>
   );
 };

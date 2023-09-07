@@ -20,9 +20,21 @@ const wishlistApi = api.injectEndpoints({
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 }
-            })
+            }),
+            providesTags: ['wishlist']
+        }),
+        deleteWishlist: builder.mutation({
+            query: (data) => ({
+                url: `/wishlist/delete-wishlist/${data.id}`,
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${data.token}`,
+                    'Content-Type': 'application/json',
+                }
+            }),
+            invalidatesTags: ['wishlist']
         }),
     })
 })
 
-export const {useAddWishlistMutation, useGetWishlistQuery} = wishlistApi;
+export const {useAddWishlistMutation, useGetWishlistQuery, useDeleteWishlistMutation} = wishlistApi;
