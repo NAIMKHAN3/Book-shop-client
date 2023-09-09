@@ -11,7 +11,8 @@ const wishlistApi = api.injectEndpoints({
                     Authorization: `Bearer ${data.token}`,
                     'Content-Type': 'application/json',
                 }
-            })
+            }),
+            invalidatesTags: ['wishlist']
         }),
         getWishlist: builder.query({
             query: (token) =>({

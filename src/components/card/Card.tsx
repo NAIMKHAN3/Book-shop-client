@@ -15,8 +15,8 @@ const Card = (props:any) => {
               <Image className="border p-2 rounded-md h-full w-full" src={book.image?.fileUrl} />
               </div>
               <div>
-                <Heading className="mt-5 text-xl font-bold">
-                <span className="font-bold"> Title:</span>  {book.title.slice(0, 30)}
+                <Heading className="mt-5 text-lg font-bold">
+                <span className="font-bold"> Title:</span>  {book.title.slice(0, 20)}
                 </Heading>
                 <div className="flex justify-between items-center mt-3">
                 <div className=" text-lg">

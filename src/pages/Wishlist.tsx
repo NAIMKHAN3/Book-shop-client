@@ -41,8 +41,8 @@ const Wishlist = () => {
                             <Image className='w-full h-full' src={wishlist?.bookId?.image?.fileUrl} />
                         </div>
                         <div className='ml-4'>
-                            <Heading className="mt-5 text-xl font-bold">
-                                <span className="font-bold"> Title:</span>  {wishlist?.bookId?.title.slice(0, 30)}
+                            <Heading className="mt-5 text-lg font-bold">
+                                <span className="font-bold"> Title:</span>  {wishlist?.bookId?.title.slice(0, 20)}
                             </Heading>
                            
                                 <div className="mt-3 text-lg flex justify-between items-center w-full">
