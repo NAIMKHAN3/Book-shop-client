@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import Input from "../components/Input";
 import Button from "../components/Button";
 import Paragraph from "../components/Paragraph";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../redux/hook";
 import { useLoginUserMutation } from "../redux/user/userApi";
 import { IError } from "../types/types";
@@ -13,6 +13,8 @@ import { useEffect } from "react";
 import { userSet } from "../redux/user/userSlice";
 const SignIn = () => {
     const navigate = useNavigate()
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
     const [loginUser, { data, isLoading, isError, isSuccess, error }] = useLoginUserMutation()
     const dispatch = useAppDispatch()
     const formik = useFormik({
@@ -33,7 +35,7 @@ const SignIn = () => {
         if (isSuccess) {
             dispatch(userSet(data))
             toast.success('Sign In success', { id: 'signup' })
-            navigate('/')
+            navigate(from, { replace: true })
         }
         if (isError) {
             const errorMessage = error as IError
@@ -42,7 +44,7 @@ const SignIn = () => {
         }
     },[isError, isLoading, isSuccess])
     return (
-        <div className="w-full md:w-1/3 rounded-md mx-auto my-5 p-5 border border-[#0874c4]">
+        <div className="w-full md:w-1/3  rounded-md md:mx-auto md:my-5 p-5 border border-[#0874c4]">
             <Heading className="text-center text-3xl text-[#0874c4]">
                 Sign In
             </Heading>

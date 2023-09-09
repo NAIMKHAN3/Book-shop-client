@@ -100,31 +100,34 @@ const BookDetails = () => {
     return (
         <div className='w-4/5 mx-auto my-10'>
             <div>
-                <div className='flex items-center'>
-                    <div className='h-[600px] w-[800px]'>
+                <div className='flex flex-col md:flex-row md:items-center'>
+                    <div className='md:h-[600px] md:w-[800px]'>
                         <Image className='h-full w-full' src={book?.image?.fileUrl} />
                     </div>
                     <div className='p-5'>
-                        <Paragraph className='flex items-center text-3xl'>
+                        <Paragraph className='flex items-center text-xl'>
                             <span className='font-semibold '>Title : </span>
                             {book?.title.slice(0, 30)}
                         </Paragraph>
-                        <Paragraph className='flex items-center text-3xl mt-4'>
+                        <Paragraph className='flex items-center text-xl mt-4'>
+                            <span className=' font-semibold'>Publication Date : </span>
+                            {formattedDate ? formattedDate : book?.publicationDate}
+                        </Paragraph>
+                        <div className='flex flex-row md:flex-col justify-between'>
+                        <Paragraph className='flex items-center text-xl mt-4'>
                             <span className=' font-semibold'>Author : </span>
                             {book?.author?.name}
                         </Paragraph>
-                        <Paragraph className='flex items-center text-3xl mt-4'>
+                        <Paragraph className='flex items-center text-xl mt-4'>
                             <span className='font-semibold '>Genre : </span>
                             {book?.genre}
                         </Paragraph>
-                        <Paragraph className='flex items-center text-3xl mt-4'>
+                        </div>
+                        <Paragraph className='flex items-center text-xl mt-4'>
                             <span className='font-semibold '>Price : </span>
                             {book?.price}
                         </Paragraph>
-                        <Paragraph className='flex items-center text-3xl mt-4'>
-                            <span className=' font-semibold'>Price : </span>
-                            {formattedDate ? formattedDate : book?.publicationDate}
-                        </Paragraph>
+                        
                         {
                             book?.author?._id === _id? <div className='mt-10 flex items-center'>
                             <Link to={`/update-book/${book?._id}`}><Button>Edit</Button></Link>
@@ -158,7 +161,7 @@ const BookDetails = () => {
             {
                 book?.reviews?.length ? <div>
                     {
-                        book.reviews.map(review => <Heading className='border border-[#0874c4] py-2 px-5 rounded-md text-lg font-semibold'>{review}</Heading>)
+                        book.reviews.map(review => <Heading className='border border-[#0874c4] py-2 px-5 rounded-md text-lg font-semibold my-3'>{review}</Heading>)
                     }
                 </div> : null
             }

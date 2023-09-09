@@ -3,7 +3,7 @@ import Input from '../components/Input';
 import Heading from '../components/Heading';
 import Button from '../components/Button';
 import Paragraph from '../components/Paragraph';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useRegisterUserMutation } from '../redux/user/userApi';
 import { useAppDispatch } from '../redux/hook';
 import { userSet } from '../redux/user/userSlice';
@@ -13,6 +13,9 @@ import { useEffect } from 'react';
 const SignUp = () => {
     const [postUser, { data, isLoading, isError, isSuccess, error }] = useRegisterUserMutation()
     const dispatch = useAppDispatch()
+    const location = useLocation();
+    const navigate = useNavigate()
+    const from = location.state?.from?.pathname || '/';
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -32,6 +35,7 @@ const SignUp = () => {
         if (isSuccess) {
             dispatch(userSet(data))
             toast.success('Sign up success', { id: 'signup' })
+            navigate(from, { replace: true })
         }
         if (isError) {
             const errorMessage = error as IError

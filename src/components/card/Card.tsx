@@ -10,7 +10,7 @@ const Card = (props:any) => {
 
     return (
        <Link to={`/book-details/${book._id}`}>
-         <div className=" p-5 rounded-lg shadow-lg cursor-pointer">
+         <div className=" p-5 rounded-lg shadow-md hover:shadow-xl cursor-pointer">
               <div className='h-96'>
               <Image className="border p-2 rounded-md h-full w-full" src={book.image?.fileUrl} />
               </div>
@@ -20,20 +20,15 @@ const Card = (props:any) => {
                 </Heading>
                 <div className="flex justify-between items-center mt-3">
                 <div className=" text-lg">
-                  <Paragraph>
-                  <span className="font-bold"> Author:</span> {book.author?.name}
+                <Paragraph className="mt-3">
+                  <span className="font-bold"> Genre:</span> {book.genre}
                   </Paragraph>
-                  <Paragraph className="mt-3">
-                  <span className="font-bold"> Publication Date:</span> {book.publicationDate}
-                  </Paragraph>
+                  
                   
                 </div>
                 <div className="text-lg">
-                <Paragraph className="">
-                  <span className="font-bold"> Price:</span> {book.price}
-                  </Paragraph>
-                  <Paragraph className="mt-3">
-                  <span className="font-bold"> Genre:</span> {book.genre}
+                <Paragraph>
+                  <span className="font-bold"> Author:</span> {book.author?.name}
                   </Paragraph>
                 </div>
                 </div>
