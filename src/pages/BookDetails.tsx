@@ -100,7 +100,7 @@ const BookDetails = () => {
     return (
         <div className='w-4/5 mx-auto my-10'>
             <div>
-                <div className='flex flex-col md:flex-row md:items-center'>
+                <div className='flex flex-col lg:flex-row md:items-center'>
                     <div className='md:h-[600px] md:w-[800px]'>
                         <Image className='h-full w-full' src={book?.image?.fileUrl} />
                     </div>
@@ -110,22 +110,21 @@ const BookDetails = () => {
                             {book?.title.slice(0, 30)}
                         </Paragraph>
                         <Paragraph className='flex items-center text-xl mt-4'>
-                            <span className=' font-semibold'>Publication Date : </span>
-                            {formattedDate ? formattedDate : book?.publicationDate}
+                            <span className='font-semibold '>Genre : </span>
+                            {book?.genre}
                         </Paragraph>
-                        <div className='flex flex-row md:flex-col justify-between'>
+                      
                         <Paragraph className='flex items-center text-xl mt-4'>
                             <span className=' font-semibold'>Author : </span>
                             {book?.author?.name}
                         </Paragraph>
                         <Paragraph className='flex items-center text-xl mt-4'>
-                            <span className='font-semibold '>Genre : </span>
-                            {book?.genre}
-                        </Paragraph>
-                        </div>
-                        <Paragraph className='flex items-center text-xl mt-4'>
                             <span className='font-semibold '>Price : </span>
                             {book?.price}
+                        </Paragraph>
+                        <Paragraph className='flex items-center text-xl mt-4'>
+                            <span className=' font-semibold'>Date : </span>
+                            {formattedDate ? formattedDate : book?.publicationDate}
                         </Paragraph>
                         
                         {
@@ -147,7 +146,7 @@ const BookDetails = () => {
             <form onSubmit={formik.handleSubmit}>
                 <div className="flex my-5 w-3/5 mx-auto">
                     <Input
-                        className="border-2 border-gray-400 w-full px-2 py-3 my-5 rounded-full focus:outline-none focus:border-blue-500"
+                        className="border-2 border-gray-400 w-full px-2 py-3 my-5 rounded-lg focus:outline-none focus:border-blue-500"
                         id="review"
                         name="review"
                         type="text"

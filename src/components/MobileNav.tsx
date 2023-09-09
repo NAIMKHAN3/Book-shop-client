@@ -7,12 +7,10 @@ import { Link, } from 'react-router-dom';
 
 import { useState } from 'react';
 import Paragraph from './Paragraph';
-import Button from './Button';
 import { useAppDispatch, useAppSelector } from '../redux/hook';
 import { removeUser } from '../redux/user/userSlice';
 import Heading from './Heading';
-import { BsFacebook, BsFillHeartFill, BsInstagram, BsLinkedin, BsTelephone, BsYoutube } from 'react-icons/bs';
-import NavbarIcon from './NavbarIcon';
+
 import Image from './Image';
 
 const MobileNavbar = () => {

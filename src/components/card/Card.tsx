@@ -20,17 +20,15 @@ const Card = (props:any) => {
                 </Heading>
                 <div className="flex justify-between items-center mt-3">
                 <div className=" text-lg">
-                <Paragraph className="mt-3">
+                <Paragraph className="">
                   <span className="font-bold"> Genre:</span> {book.genre}
                   </Paragraph>
                   
-                  
-                </div>
-                <div className="text-lg">
-                <Paragraph>
+                  <Paragraph>
                   <span className="font-bold"> Author:</span> {book.author?.name}
                   </Paragraph>
                 </div>
+                
                 </div>
               </div>
             </div>
